@@ -1,0 +1,6 @@
+
+Flask
+pyrogram
+tgcrypto
+undetected-chromedriver
+selenium

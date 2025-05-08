@@ -1,0 +1,15 @@
+
+services:
+  - type: web
+    name: netflix-checker
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python app.py
+    envVars:
+      - key: API_ID
+        value: 28748671
+      - key: API_HASH
+        value: f53ec7c41ce34e6d585674ed9ce6167c
+      - key: BOT_TOKEN
+        value: 7793230457:AAGSNLF1YzjSPFnuKPKZJhEjYN-NPsSs2p8
