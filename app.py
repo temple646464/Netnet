@@ -1,10 +1,8 @@
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
-import os
 from flask import Flask, request
 from pyrogram import Client, filters
 from pyrogram.types import Message
 from checker import check_accounts
+import os
 
 API_ID = int(os.environ.get("API_ID"))
 API_HASH = os.environ.get("API_HASH")
@@ -34,16 +32,20 @@ async def handle_file(_, message: Message):
     results = check_accounts(combos)
     valid, invalid, locked = results["valid"], results["invalid"], results["locked"]
 
-    text = f"✅ Valid: {len(valid)}\n❌ Invalid: {len(invalid)}\n🔒 Locked: {len(locked)}"
+    text = f"✅ Valid: {len(valid)}\\n❌ Invalid: {len(invalid)}\\n🔒 Locked: {len(locked)}"
 
     result_file = "results.txt"
     with open(result_file, "w") as f:
-        f.write("[VALID ACCOUNTS]\n" + "\n".join(valid) + "\n\n")
-        f.write("[LOCKED ACCOUNTS]\n" + "\n".join(locked) + "\n\n")
-        f.write("[INVALID ACCOUNTS]\n" + "\n".join(invalid))
+        f.write("[VALID ACCOUNTS]\\n" + "\\n".join(valid) + "\\n\\n")
+        f.write("[LOCKED ACCOUNTS]\\n" + "\\n".join(locked) + "\\n\\n")
+        f.write("[INVALID ACCOUNTS]\\n" + "\\n".join(invalid))
 
     await message.reply_document(result_file, caption=text)
     os.remove(path)
     os.remove(result_file)
 
 bot.start()
+
+# Start Flask server (required for webhook)
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
